@@ -5,6 +5,7 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import categories from './categories/reducer';
 import posts from './posts/reducer';
+import comments from './comments/reducer';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
@@ -23,6 +24,7 @@ const store = createStore(
     combineReducers({
       categories,
       posts,
+      comments,
         router: routerReducer
     }),
   //window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
