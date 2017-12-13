@@ -1,6 +1,6 @@
 import {
   RECEIVE_CATEGORIES,
-  RECEIVE_CATEGORY_POSTS
+ // RECEIVE_CATEGORY_POSTS
 } from './actions';
 
 const initialState = {
@@ -21,13 +21,13 @@ function categories (state = initialState, action) {
 
       return newState;
 
-    case RECEIVE_CATEGORY_POSTS :
+/*    case RECEIVE_CATEGORY_POSTS :
       const { categoryName, posts } = action;
       console.log(`Get all posts from ${categoryName} categories`);
       newState = Object.assign({}, state);
       newState.posts[categoryName] = posts;
 
-      return newState;
+      return newState;*/
     default :
       return state
   }

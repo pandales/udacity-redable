@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import  { PostsList } from "../posts/components";
-import { getPosts } from "../posts/actions";
+import  { PostsList, AddPostForm } from "../posts/components";
+
 
 class HomePage extends Component {
 
-  componentDidMount(){
-    this.props.fetchPosts();
-  }
   render () {
     return (
       <div id="home">
-        <PostsList posts={this.props.posts}/>
+        <PostsList title="Latest Posts" posts={ this.props.posts }/>
+        <AddPostForm />
       </div>
     );
   }
@@ -21,8 +19,4 @@ const mapStateToProps = (state, props) => ({
   posts: state.posts.items
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  fetchPosts: () => getPosts(dispatch)
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default connect(mapStateToProps)(HomePage);
