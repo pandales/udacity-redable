@@ -53,7 +53,10 @@ export const editComment = (dispatch, comment) => {
   api.editComment(comment).then(result => dispatch(commentUpdated(result)));
 };
 
-
 export const deleteComment = (dispatch, comment) => {
   api.deleteComment(comment.id).then(result => dispatch(commentDeleted(comment)));
+};
+
+export const voteComment = (dispatch, comment, action) => {
+  api.voteComment(comment.id, action).then(result => dispatch(commentUpdated(result)));
 };

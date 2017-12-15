@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import  { PostsList, AddPostForm } from "../posts/components";
+import PostsList from "../../posts/components/PostList";
+import AddPostForm from "../../posts/components/AddPostForm";
 
 
 class HomePage extends Component {

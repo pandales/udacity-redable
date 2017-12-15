@@ -59,3 +59,7 @@ export const editPost = (dispatch, post) => {
 export const deletePost = (dispatch, postID) => {
   api.deletePost(postID).then(result => dispatch(postDeleted(result)));
 };
+
+export const votePost = (dispatch, post, action) => {
+  api.votePost(post.id, action).then(result => dispatch(postUpdated(result)));
+};

@@ -24,7 +24,6 @@ function comments(state = initialState, action) {
       console.log('Comment Added');
       const {comment} = action;
       newState = Object.assign({}, state);
-      console.log(newState, newState.parentId);
       newState[comment.parentId].push(comment);
 
       return newState;
