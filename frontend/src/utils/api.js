@@ -47,7 +47,7 @@ export const votePost = (id, action /*upVote, downVote*/) =>
       ...headers,
       'Content-Type': 'application/json'
     },
-    body: action
+    body: JSON.stringify({option:action})
   }).then(res => res.json());
 
 export const editPost = (post) =>
@@ -94,7 +94,7 @@ export const voteComment = (id, action /*upVote, downVote*/) =>
       ...headers,
       'Content-Type': 'application/json'
     },
-    body: action
+    body: JSON.stringify({option:action})
   }).then(res => res.json());
 
 export const editComment = (comment) =>
