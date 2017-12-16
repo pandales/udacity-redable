@@ -1,20 +1,19 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Link} from 'react-router-dom';
 import Moment from 'react-moment';
 import PostVoteControl from './PostVoteControl';
 
-export default class PostCardView extends Component {
+export default function PostCardView ({post}){
 
-  render() {
-    const {post} = this.props;
-    const postLinkObject = {
-      pathname: `/post/${post.id}`,
-      state: {post: post}
-    };
-    const postDate = new Date(post.timestamp);
 
-    return (
+  const postLinkObject = {
+    pathname: `/post/${post.id}`,
+    state: {post: post}
+  };
 
+  const postDate = new Date(post.timestamp);
+
+  return (
       <div className="postCard card bg-light">
         <div className="card-body">
           <div className="card-title row">
@@ -27,11 +26,11 @@ export default class PostCardView extends Component {
             written by: {post.author} in <Link to={`/category/${post.category}`}> {post.category} category</Link>
           </h6>
           <p className="card-text">
-            {post.body}
+            {post.body.substr(0, 50)}...
           </p>
-          <div className="card-footer row">
+          <div className="row">
             <div className="col-md-8">
-              <Link to={postLinkObject} className="btn btn-primary">Continue reading</Link>
+              <Link to={postLinkObject} className="card-link">Read more</Link>
             </div>
             <div className="col-md-4">
               <PostVoteControl post={post} />
@@ -40,5 +39,4 @@ export default class PostCardView extends Component {
         </div>
       </div>
     );
-  }
-};
+}

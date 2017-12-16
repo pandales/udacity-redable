@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {votePost} from '../actions';
 import {connect} from 'react-redux';
 import {FaThumbsODown, FaThumbsOUp} from 'react-icons/lib/fa';
+
 class PostVoteControl extends Component {
 
   votePost(action) {
@@ -12,22 +13,18 @@ class PostVoteControl extends Component {
   render() {
     const {post} = this.props;
     return (
-      <div className="votes container-fluid">
-        <div className="row">
-          <div className="col-6"> votes: {post.voteScore}</div>
-          <div className="col">
-            <FaThumbsODown className="decrease-votes"
-                           onClick={this.votePost.bind(this, 'downVote')}/>
-          </div>
-          <div className="col">
-            <FaThumbsOUp className="increase-votes"
-                         onClick={this.votePost.bind(this, 'upVote')}/>
-          </div>
-        </div>
+      <div className="votes text-right">
+          <span className=""> votes: {post.voteScore}</span>
+          <FaThumbsODown className="decrease-votes vote-icon"
+                         onClick={this.votePost.bind(this, 'downVote')} title={'Click to add -1 vote'}  />
+          <FaThumbsOUp className="increase-votes vote-icon"
+                         onClick={this.votePost.bind(this, 'upVote')} title={'Click to add 1 vote'} />
       </div>
     )
   }
 }
+
+
 const mapDispatchToProps = (dispatch) => ({
   votePost: (post, action) => votePost(dispatch, post, action)
 });

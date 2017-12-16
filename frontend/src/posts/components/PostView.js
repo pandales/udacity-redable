@@ -8,8 +8,9 @@ import {deletePost, editPost} from '../actions';
 import EditPostForm from './EditPostForm';
 import CommentList from '../../comments/components/CommentList';
 import AddCommentForm from '../../comments/components/AddCommentForm';
+import {FaClose} from 'react-icons/lib/fa';
 
- class PostView extends Component {
+class PostView extends Component {
 
   constructor(props) {
     super(props);
@@ -49,44 +50,49 @@ import AddCommentForm from '../../comments/components/AddCommentForm';
 
     return (
       <div id="postView">
-        <div className="bd-title row">
-          <h2 className="col-md-9">{post.title} </h2>
-          <div className="col-md-3 pull-right data">
-            <Moment format="MM/DD/YY">{postDate}</Moment>
-          </div>
-        </div>
-        <h6 className="mb-2 text-muted">
-          written by: {post.author} in <Link to={`/category/${post.category}`}> {post.category} category</Link>
-        </h6>
         <div className="row">
-          <p className="bd-lead col-md-9">
-            {post.body}
-          </p>
-          <div className="col-md-3 post-sidebar-menu">
-            <div className="row">
-              <PostVoteControl post={post} />
+          <div className="col-sm-9">
+            <div className="bd-title ">
+              <h2>{post.title} </h2>
             </div>
-            <div className="btn-group-vertical">
-              <button className="go-back btn btn-secondary" onClick={this.openModal.bind(this)}>Edit Post</button>
-              <button className="go-back btn btn-secondary" onClick={this.deletePost.bind(this)}>Delete Post</button>
-              <button className="go-back btn btn-secondary" onClick={history.goBack}>Go Back</button>
+            <h6 className="mb-2 text-muted">
+              written by: {post.author} in <Link to={`/category/${post.category}`}> {post.category} category </Link>
+              on <Moment format="MMM DD of YYYY">{postDate}</Moment>
+            </h6>
+            <p>
+              {post.body}
+            </p>
+          </div>
+          <div className="col-sm-3 post-sidebar-menu">
+            <PostVoteControl post={post}/>
+            <div className="btn-group-vertical float-right">
+              <button className="btn btn-secondary" onClick={this.openModal.bind(this)}>Edit Post</button>
+              <button className="btn btn-secondary" onClick={this.deletePost.bind(this)}>Delete Post</button>
+              <button className="btn btn-secondary" onClick={history.goBack}>Go Back</button>
             </div>
-
           </div>
         </div>
+
         <CommentList parentID={match.params.postID}/>
+
         <AddCommentForm parentID={match.params.postID}/>
 
         <Modal
           isOpen={this.state.isBeingEdited}
-          // onAfterOpen={afterOpenFn}
-          //onRequestClose={this.toggleEditModal()}
-          // closeTimeoutMS={n}
-          // style={customStyle}
+           style={{
+             content:{
+               bottom: 'auto',
+               width: '600px',
+               left: '50%',
+               right: '40px',
+               marginLeft: '-300px'
+             }
+           }}
           contentLabel="Edit post"
           appElement={document.getElementById('root')}
         >
-          <button onClick={this.closeModal.bind(this)}>Close Modal...</button>
+
+          <a onClick={this.closeModal.bind(this)} className={'float-right'}> <FaClose size={30}/></a>
           <EditPostForm
             post={post}
             categories={categories}
@@ -106,7 +112,6 @@ const mapStateToProps = (state, props) => (
   });
 
 const mapDispatchToProps = (dispatch) => ({
-  ...mapDispatchToProps,
   deletePost: postID => deletePost(dispatch, postID),
   editPost: post => editPost(dispatch, post)
 });

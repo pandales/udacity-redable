@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {addComment} from '../actions';
 import {connect} from 'react-redux';
 
-
 class AddCommentForm extends Component {
 
   constructor(props) {
@@ -37,7 +36,7 @@ class AddCommentForm extends Component {
     let {author, body} = this.state;
 
     return (
-      <form className="addCommentForm">
+      <form className="addCommentForm crud-form add">
         {/*
         category - Any of the categories listed in*/}
         <fieldset>

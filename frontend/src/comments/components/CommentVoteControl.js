@@ -14,11 +14,11 @@ class CommentVoteControl extends Component {
     const {comment} = this.props;
 
     return (
-      <div className="votes d-inline">
+      <div className="votes text-right  d-inline">
         <span className=""> votes: {comment.voteScore}</span>
-        <FaThumbsODown className="decrease-votes"
+        <FaThumbsODown className="decrease-votes vote-icon"
                        onClick={this.voteComment.bind(this, 'downVote')}/>
-        <FaThumbsOUp className="increase-votes"
+        <FaThumbsOUp className="increase-votes vote-icon"
                      onClick={this.voteComment.bind(this, 'upVote')}/>
       </div>
     )

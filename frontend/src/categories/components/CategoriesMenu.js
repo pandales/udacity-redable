@@ -8,12 +8,9 @@ function CategoriesMenu (props){
     <div className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
         <Link to="/" className="navbar-brand">Redable Blog</Link>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarResponsive">
-          <ul className="navbar-nav mr-auto">
+
+        <div>
+          <ul className="nav mr-auto">
             {props.categories.map((category) => (
               <li className="nav-item" key={category.path}>
                 <NavLink
@@ -28,7 +25,7 @@ function CategoriesMenu (props){
       </div>
     </div>
   );
-};
+}
 
 const mapStateToProps = (state, props) => ({
   categories: state.categories.items

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 export default class EditPostForm extends Component {
 
@@ -19,9 +19,7 @@ export default class EditPostForm extends Component {
   savePost = event => {
     event.preventDefault();
 
-    //Object.assign(this.props.post, this.state.post);
     this.props.editPost(this.state.post);
-    //this.props.closeModal();
   };
 
   render() {
@@ -29,21 +27,23 @@ export default class EditPostForm extends Component {
     let {category, title, author, body} = this.state.post;
 
     return (
-      <form className="addPostForm">
+      <form className="editPostForm crud-form edit">
         {/*
         category - Any of the categories listed in*/}
         <fieldset>
           <legend>Edit post</legend>
           <div className="form-group row">
             <label htmlFor="postCategory" className="col-sm-2 col-form-label">Category</label>
-            <select className="form-control col-sm-10" id="postCategory"
-                    onChange={handleChangeInput}
-                    stateprop="category"
-                    value={category}>
-              {this.props.categories.map(category =>
-                <option key={category.name} value={category.name}>{category.name}</option>
-              )}
-            </select>
+            <div className="col-sm-10">
+              <select className="form-control" id="postCategory"
+                      onChange={handleChangeInput}
+                      stateprop="category"
+                      value={category}>
+                {this.props.categories.map(category =>
+                  <option key={category.name} value={category.name}>{category.name}</option>
+                )}
+              </select>
+            </div>
           </div>
 
           <div className="form-group row">

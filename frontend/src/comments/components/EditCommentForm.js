@@ -29,7 +29,7 @@ export default class EditCommentForm extends Component {
     let {author, body} = this.state.comment;
 
     return (
-      <form className="addCommentForm">
+      <form className="editCommentForm crud-form edit">
         {/*
         category - Any of the categories listed in*/}
         <fieldset>

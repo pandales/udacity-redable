@@ -36,14 +36,15 @@ class AddPostForm extends Component {
     let {category, title, author, body} = this.state;
 
     return (
-      <form className="addPostForm">
+      <form className="addPostForm crud-form add container">
         {/*
         category - Any of the categories listed in*/}
         <fieldset>
           <legend>Add new post</legend>
           <div className="form-group row">
             <label htmlFor="postCategory" className="col-sm-2 col-form-label">Category</label>
-            <select className="form-control col-sm-10" id="postCategory"
+            <div className="col-sm-10">
+            <select className="form-control" id="postCategory"
                     onChange={handleChangeInput}
                     stateprop="category"
                     value={category}>
@@ -51,6 +52,7 @@ class AddPostForm extends Component {
                 <option key={category.name} value={category.name}>{category.name}</option>
               )}
             </select>
+            </div>
           </div>
 
           <div className="form-group row">

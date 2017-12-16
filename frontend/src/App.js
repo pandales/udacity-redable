@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './assets/bootstrap.min.css';
+import './styles/bootstrap.min.css';
 import { connect } from 'react-redux';
 import HomePage from './root/components/HomePage';
 import  CategoryView  from "./categories/components/CategoryView";
@@ -8,6 +8,7 @@ import  PostView  from "./posts/components/PostView";
 import { Route, withRouter } from 'react-router-dom';
 import { getPosts } from "./posts/actions";
 import { getCategories } from './categories/actions';
+import './App.css';
 
 class App extends Component {
 

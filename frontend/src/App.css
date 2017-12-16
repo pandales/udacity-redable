@@ -1,28 +1,30 @@
-.App {
-  text-align: center;
+.App > .container {
+  padding-top: 10px;
+}
+.navbar-brand {
+  font-size: 2rem;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+/*Vote controls*/
+.vote-icon {
+  cursor: pointer;
+  margin-left: 10px;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.vote-icon:hover{
+  color: #EB6864;
 }
 
-.App-title {
-  font-size: 1.5em;
+
+/*Form Styles*/
+.crud-form {
+  background: lightgray;
+  border-radius: 10px;
+  padding: 15px 20px;
 }
 
-.App-intro {
-  font-size: large;
-}
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+/*Post View*/
+.post-sidebar-menu .btn-group-vertical{
+  margin-top: 10px;
 }
