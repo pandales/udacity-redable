@@ -1,29 +1,48 @@
 import React, {Component} from 'react';
 import {votePost} from '../actions';
 import {connect} from 'react-redux';
-import {FaThumbsODown, FaThumbsOUp} from 'react-icons/lib/fa';
+import {FaThumbsOUp, FaPlusSquareO, FaMinusSquareO} from 'react-icons/lib/fa';
 
-class PostVoteControl extends Component {
+function PostVoteControl(props) {
 
-  votePost(action) {
-    const {votePost, post} = this.props;
+  const votePost = (action) => {
+    const {votePost, post} = props;
     votePost(post, action);
-  }
+  };
 
-  render() {
-    const {post} = this.props;
-    return (
-      <div className="votes text-right">
-          <span className=""> votes: {post.voteScore}</span>
-          <FaThumbsODown className="decrease-votes vote-icon"
-                         onClick={this.votePost.bind(this, 'downVote')} title={'Click to add -1 vote'}  />
-          <FaThumbsOUp className="increase-votes vote-icon"
-                         onClick={this.votePost.bind(this, 'upVote')} title={'Click to add 1 vote'} />
+  const {post: {voteScore}} = props;
+
+  return (
+    <div className="votes text-right" style={styles.container}>
+      <div className="controls" style={styles.controls}>
+        <FaPlusSquareO className="increase-votes vote-icon"
+                       style={styles.controlsIcons}
+                       onClick={() => votePost('upVote')} title={'Click to add 1 vote'}/>
+        <FaMinusSquareO className="decrease-votes vote-icon"
+                        style={styles.controlsIcons}
+                        onClick={() => votePost('downVote')} title={'Click to add -1 vote'}/>
       </div>
-    )
-  }
+      <div className="info">
+        <FaThumbsOUp style={{fontSize: 25}} title={'votes'}/>
+        <span className="">{voteScore}</span>
+      </div>
+    </div>
+  )
 }
 
+const styles = {
+  container: {
+    display: 'flex',
+    items: 'center'
+  },
+  controls: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  controlsIcons: {
+    fontSize: 14
+  }
+};
 
 const mapDispatchToProps = (dispatch) => ({
   votePost: (post, action) => votePost(dispatch, post, action)

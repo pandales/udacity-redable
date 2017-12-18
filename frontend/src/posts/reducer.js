@@ -1,5 +1,6 @@
 import {
   RECEIVED_POSTS,
+  RECEIVED_POST,
   POST_ADDED,
   POST_DELETED,
   POST_UPDATED
@@ -19,6 +20,15 @@ function posts(state = initialState, action) {
       newState = Object.assign({}, state);
       newState.items = items;
       newState.category = category ? category : null;
+
+      return newState;
+
+    case RECEIVED_POST :
+      console.log('Get Post');
+      const {receivedPost} = action;
+
+      // Update the reducer
+
 
       return newState;
 

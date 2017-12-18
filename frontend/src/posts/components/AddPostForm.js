@@ -4,8 +4,8 @@ import {connect} from 'react-redux';
 
 class AddPostForm extends Component {
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.initialState = {
       title: '',
       category: 'udacity',
@@ -13,6 +13,7 @@ class AddPostForm extends Component {
       body: ''
     };
     this.state = this.initialState;
+    this.savePost = this.savePost.bind(this);
   }
 
   _reset() {
@@ -93,7 +94,7 @@ class AddPostForm extends Component {
           </div>
 
         </fieldset>
-        <button className="btn btn-primary" onClick={savePost.bind(this)}>Submit</button>
+        <button className="btn btn-primary" onClick={savePost}>Submit</button>
       </form>
     )
   }

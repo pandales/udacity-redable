@@ -72,15 +72,7 @@ class CommentView extends Component {
 
         <Modal
           isOpen={this.state.isBeingEdited}
-          style={{
-            content:{
-              bottom: 'auto',
-              width: '600px',
-              left: '50%',
-              right: '40px',
-              marginLeft: '-300px'
-            }
-          }}
+          style={styles.modal}
           contentLabel="Edit Comment"
           appElement={document.getElementById('root')}
         >
@@ -95,6 +87,18 @@ class CommentView extends Component {
     );
   }
 }
+
+const styles = {
+  modal: {
+    content:{
+      bottom: 'auto',
+      width: '600px',
+      left: '50%',
+      right: '40px',
+      marginLeft: '-300px'
+    }
+  }
+};
 
 const mapStateToProps = (state, props) => ({
   comments: state.comments,

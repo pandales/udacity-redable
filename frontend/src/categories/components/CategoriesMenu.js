@@ -15,7 +15,7 @@ function CategoriesMenu (props){
               <li className="nav-item" key={category.path}>
                 <NavLink
                   className='nav-link'
-                  to={`/category/${category.path}`}>
+                  to={`/${category.path}`}>
                   {category.name}
                 </NavLink>
               </li>

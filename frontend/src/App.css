@@ -6,12 +6,14 @@
 }
 
 /*Vote controls*/
-.vote-icon {
+.vote-icon,
+.control-icon {
   cursor: pointer;
   margin-left: 10px;
 }
 
-.vote-icon:hover{
+.vote-icon:hover,
+.control-icon:hover{
   color: #EB6864;
 }
 

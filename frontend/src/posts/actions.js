@@ -2,6 +2,7 @@ import * as util from '../utils/util';
 import * as api from '../utils/api';
 
 export const RECEIVED_POSTS = 'RECEIVED_POSTS';
+export const RECEIVED_POST = 'RECEIVED_POST';
 export const POST_ADDED = 'POST_ADDED';
 export const POST_DELETED = 'POST_DELETED';
 export const POST_UPDATED = 'POST_UPDATED';
@@ -11,6 +12,13 @@ export function postsReceived(items, categoryName = null) {
     type: RECEIVED_POSTS,
     categoryName,
     items
+  }
+}
+
+export function postReceived(post) {
+  return {
+    type: RECEIVED_POST,
+    post
   }
 }
 
@@ -36,6 +44,10 @@ export function postUpdated(updatedPost){
 
 export const getPosts =  dispatch => (
   api.getPosts().then(posts => dispatch(postsReceived(posts)))
+);
+
+export const getPost =  (dispatch, postID) => (
+  api.getPost(postID).then(posts => dispatch(postReceived(posts)))
 );
 
 export const addPost = (dispatch, post) => {

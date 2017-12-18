@@ -9,14 +9,17 @@ import EditPostForm from './EditPostForm';
 import CommentList from '../../comments/components/CommentList';
 import AddCommentForm from '../../comments/components/AddCommentForm';
 import {FaClose} from 'react-icons/lib/fa';
+import NotFoundPage from '../../root/components/NotFoundPage'
+import * as api from '../../utils/api'
 
 class PostView extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      isBeingEdited: false
-    }
+      isBeingEdited: false,
+      post: null
+    };
   }
 
   deletePost() {
@@ -25,7 +28,10 @@ class PostView extends Component {
     this.props.history.push('/')
   }
 
-  editPost = post => {
+  editPost(post) {
+    this.setState({post: post});
+
+    // update reducer
     this.props.editPost(post);
     this.closeModal();
   };
@@ -42,10 +48,18 @@ class PostView extends Component {
     });
   }
 
+  componentDidMount(){
+    const self = this;
+    api.getPost(this.props.match.params.postID).then(function(post){
+      self.setState({post: post});
+    });
+  }
+
   render() {
     const {history, match, posts, categories} = this.props;
-    const postData = posts.filter(post => post.id === match.params.postID);
-    const post = postData.length ? postData[0] : [];
+    let post = this.state.post;
+    if(posts && !post) return (<NotFoundPage>Post not found</NotFoundPage>);
+
     const postDate = new Date(post.timestamp);
 
     return (
@@ -56,7 +70,7 @@ class PostView extends Component {
               <h2>{post.title} </h2>
             </div>
             <h6 className="mb-2 text-muted">
-              written by: {post.author} in <Link to={`/category/${post.category}`}> {post.category} category </Link>
+              written by: {post.author} in <Link to={`/${post.category}`}> {post.category} category </Link>
               on <Moment format="MMM DD of YYYY">{postDate}</Moment>
             </h6>
             <p>
@@ -64,7 +78,9 @@ class PostView extends Component {
             </p>
           </div>
           <div className="col-sm-3 post-sidebar-menu">
-            <PostVoteControl post={post}/>
+            <div className="float-right" style={{marginBottom: 10}}>
+              <PostVoteControl post={post}/>
+            </div>
             <div className="btn-group-vertical float-right">
               <button className="btn btn-secondary" onClick={this.openModal.bind(this)}>Edit Post</button>
               <button className="btn btn-secondary" onClick={this.deletePost.bind(this)}>Delete Post</button>
