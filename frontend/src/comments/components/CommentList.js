@@ -7,25 +7,26 @@ import CommentView from './CommentView'
 class CommentList extends Component {
 
   componentDidMount() {
-    const {parentID, comments} = this.props;
-    if (!comments[parentID]) {
-      this.props.getComments(parentID)
+    const {post: {id}, comments} = this.props;
+
+    if (!comments[id]) {
+      this.props.getComments(id);
     }
   }
 
   render() {
-    const {comments, parentID} = this.props;
+    const {comments, post} = this.props;
 
     return (
       <div className="comment-list">
         <div className="row">
           <div className="col-md-6">
-            <h4 className="page-header">Comments </h4>
+            <h4 className="page-header">Comments ({post.commentCount})</h4>
           </div>
         </div>
 
         <ul className="comments list-unstyled">
-          {comments[parentID] && comments[parentID].sort(sortBy("timestamp")).map((comment) => (
+          {comments[post.id] && comments[post.id].sort(sortBy("timestamp")).map((comment) => (
             <li key={comment.id}>
               <CommentView comment={comment}/>
             </li>

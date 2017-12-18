@@ -58,7 +58,8 @@ class PostView extends Component {
   render() {
     const {history, match, posts, categories} = this.props;
     let post = this.state.post;
-    if(posts && !post) return (<NotFoundPage>Post not found</NotFoundPage>);
+    console.log(posts, post);
+    if(posts && (!post || post.error)) return (<NotFoundPage>Post not found</NotFoundPage>);
 
     const postDate = new Date(post.timestamp);
 
@@ -89,7 +90,7 @@ class PostView extends Component {
           </div>
         </div>
 
-        <CommentList parentID={match.params.postID}/>
+        <CommentList post={post}/>
 
         <AddCommentForm parentID={match.params.postID}/>
 

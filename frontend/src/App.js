@@ -30,7 +30,7 @@ class App extends Component {
 
           <Route exact path="/:categoryPath/:postID" component={ PostView }/>
 
-         <Route path="*" component={NotFoundPage} />
+          <Route path="*" component={NotFoundPage}> Page not found</Route>
         </div>
       </div>
     );
