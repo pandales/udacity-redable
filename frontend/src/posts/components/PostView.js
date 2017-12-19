@@ -4,13 +4,12 @@ import {connect} from 'react-redux'
 import Moment from 'react-moment';
 import PostVoteControl from './PostVoteControl';
 import Modal from 'react-modal';
-import {deletePost, editPost} from '../actions';
+import {deletePost, editPost, getPost, resetCurrentPost} from '../actions';
 import EditPostForm from './EditPostForm';
 import CommentList from '../../comments/components/CommentList';
 import AddCommentForm from '../../comments/components/AddCommentForm';
 import {FaClose} from 'react-icons/lib/fa';
 import NotFoundPage from '../../root/components/NotFoundPage'
-import * as api from '../../utils/api'
 
 class PostView extends Component {
 
@@ -18,7 +17,6 @@ class PostView extends Component {
     super(props);
     this.state = {
       isBeingEdited: false,
-      post: null
     };
   }
 
@@ -49,17 +47,15 @@ class PostView extends Component {
   }
 
   componentDidMount(){
-    const self = this;
-    api.getPost(this.props.match.params.postID).then(function(post){
-      self.setState({post: post});
-    });
+    this.props.getPost(this.props.match.params.postID);
   }
 
+  componentWillUnmount(){
+    this.props.resetCurrentPost();
+  }
   render() {
-    const {history, match, posts, categories} = this.props;
-    let post = this.state.post;
-    console.log(posts, post);
-    if(posts && (!post || post.error)) return (<NotFoundPage>Post not found</NotFoundPage>);
+    const {history, posts, categories, post} = this.props;
+    if(posts && (!post || !Object.keys(post).length)) return (<NotFoundPage>Post not found</NotFoundPage>);
 
     const postDate = new Date(post.timestamp);
 
@@ -80,7 +76,7 @@ class PostView extends Component {
           </div>
           <div className="col-sm-3 post-sidebar-menu">
             <div className="float-right" style={{marginBottom: 10}}>
-              <PostVoteControl post={post}/>
+              <PostVoteControl post={post} isCurrent={true}/>
             </div>
             <div className="btn-group-vertical float-right">
               <button className="btn btn-secondary" onClick={this.openModal.bind(this)}>Edit Post</button>
@@ -92,7 +88,7 @@ class PostView extends Component {
 
         <CommentList post={post}/>
 
-        <AddCommentForm parentID={match.params.postID}/>
+        <AddCommentForm post={post}/>
 
         <Modal
           isOpen={this.state.isBeingEdited}
@@ -125,12 +121,15 @@ class PostView extends Component {
 const mapStateToProps = (state, props) => (
   {
     posts: state.posts.items,
+    post: state.posts.currentPost,
     categories: state.categories.items
   });
 
 const mapDispatchToProps = (dispatch) => ({
   deletePost: postID => deletePost(dispatch, postID),
-  editPost: post => editPost(dispatch, post)
+  editPost: post => editPost(dispatch, post),
+  getPost: postID => getPost(dispatch, postID),
+  resetCurrentPost: () => dispatch(resetCurrentPost())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostView);

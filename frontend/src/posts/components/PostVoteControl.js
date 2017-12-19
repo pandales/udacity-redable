@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {votePost} from '../actions';
 import {connect} from 'react-redux';
 import {FaThumbsOUp, FaPlusSquareO, FaMinusSquareO} from 'react-icons/lib/fa';
@@ -6,8 +6,8 @@ import {FaThumbsOUp, FaPlusSquareO, FaMinusSquareO} from 'react-icons/lib/fa';
 function PostVoteControl(props) {
 
   const votePost = (action) => {
-    const {votePost, post} = props;
-    votePost(post, action);
+    const {votePost, post, isCurrent} = props;
+    votePost(post, action, isCurrent);
   };
 
   const {post: {voteScore}} = props;
@@ -45,7 +45,7 @@ const styles = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  votePost: (post, action) => votePost(dispatch, post, action)
+  votePost: (post, action, isCurrent) => votePost(dispatch, post, action, isCurrent)
 });
 
 export default connect(null, mapDispatchToProps)(PostVoteControl);

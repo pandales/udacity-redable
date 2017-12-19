@@ -28,7 +28,7 @@ class CommentList extends Component {
         <ul className="comments list-unstyled">
           {comments[post.id] && comments[post.id].sort(sortBy("timestamp")).map((comment) => (
             <li key={comment.id}>
-              <CommentView comment={comment}/>
+              <CommentView comment={comment} post={post}/>
             </li>
           ))}
         </ul>

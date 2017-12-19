@@ -8,7 +8,6 @@ import  PostView  from "./posts/components/PostView";
 import { Route, withRouter } from 'react-router-dom';
 import { getPosts } from "./posts/actions";
 import { getCategories } from './categories/actions';
-import NotFoundPage from "./root/components/NotFoundPage"
 import './App.css';
 
 class App extends Component {
@@ -30,7 +29,7 @@ class App extends Component {
 
           <Route exact path="/:categoryPath/:postID" component={ PostView }/>
 
-          <Route path="*" component={NotFoundPage}> Page not found</Route>
+
         </div>
       </div>
     );

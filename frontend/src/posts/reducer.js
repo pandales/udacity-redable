@@ -3,12 +3,14 @@ import {
   RECEIVED_POST,
   POST_ADDED,
   POST_DELETED,
-  POST_UPDATED
+  POST_UPDATED,
+  RESET_CURRENT_POST
 } from './actions';
 
 const initialState = {
   items: [],
-  category: null
+  category: null,
+  currentPost: null
 };
 
 function posts(state = initialState, action) {
@@ -16,10 +18,9 @@ function posts(state = initialState, action) {
   switch (action.type) {
     case RECEIVED_POSTS :
       console.log('Get Posts');
-      const {category, items} = action;
+      const {items} = action;
       newState = Object.assign({}, state);
       newState.items = items;
-      newState.category = category ? category : null;
 
       return newState;
 
@@ -27,10 +28,10 @@ function posts(state = initialState, action) {
       console.log('Get Post');
       const {receivedPost} = action;
 
-      // Update the reducer
-
-
-      return newState;
+      return {
+        ...state,
+        currentPost: receivedPost
+      };
 
     case POST_ADDED:
       console.log('Added Post');
@@ -46,11 +47,15 @@ function posts(state = initialState, action) {
       newState = Object.assign({}, state,{
         items: state.items.filter((item) => item.id !== deletedPost.id)
       });
-      return newState;
+      return {
+        ...newState,
+        currentPost: null
+      };
 
     case POST_UPDATED:
-      console.log('Post Updated');
-      const { updatedPost } = action;
+      console.log('Updated Post');
+      const { updatedPost, isCurrent } = action;
+
       newState = Object.assign({}, state,{
         items: state.items.map((item) => {
           if(item.id !== updatedPost.id){
@@ -60,7 +65,19 @@ function posts(state = initialState, action) {
           }
         })
       });
+
+      if(isCurrent) newState.currentPost = updatedPost;
+
       return newState;
+
+    case RESET_CURRENT_POST:
+      console.log("current post reseted");
+
+      return {
+        ...state,
+        currentPost: null
+      };
+
 
     default :
       return state

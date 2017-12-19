@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Moment from 'react-moment';
 import {deleteComment, editComment} from '../actions';
+import {postUpdated} from "../../posts/actions";
 import {connect} from 'react-redux';
 import Modal from 'react-modal';
 import CommentVoteControl from './CommentVoteControl';
@@ -19,7 +20,10 @@ class CommentView extends Component {
 
   deleteComment(comment) {
     console.log("delete comment");
-    this.props.deleteComment(comment)
+    const {deleteComment, post, notifyPostUpdate} = this.props;
+    deleteComment(comment);
+    post.commentCount -= 1;
+    notifyPostUpdate(post);
   }
 
   editComment = comment => {
@@ -101,12 +105,13 @@ const styles = {
 };
 
 const mapStateToProps = (state, props) => ({
-  comments: state.comments,
+  comments: state.comments
 });
 
 const mapDispatchToProps = (dispatch) => ({
   deleteComment: id => deleteComment(dispatch, id),
-  editComment: comment => editComment(dispatch, comment)
+  editComment: comment => editComment(dispatch, comment),
+  notifyPostUpdate: post => dispatch(postUpdated(post))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommentView);

@@ -42,9 +42,7 @@ class PostCardView extends Component{
 
   render() {
     const {post, categories} = this.props;
-    const postLinkObject = {
-      pathname: `/${post.category}/${post.id}`
-    };
+    const postLinkObject = `/${post.category}/${post.id}`;
 
 
     const postDate = new Date(post.timestamp);
@@ -86,7 +84,7 @@ class PostCardView extends Component{
                 <div className="comments">
                   <FaCommentingO style={{fontSize: 25}}/> {post.commentCount}
                 </div>
-                <PostVoteControl post={post}/>
+                <PostVoteControl post={post} isCurrent={false}/>
               </div>
             </div>
           </div>

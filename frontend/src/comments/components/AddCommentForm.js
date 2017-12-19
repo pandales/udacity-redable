@@ -1,15 +1,17 @@
 import React, {Component} from 'react';
 import {addComment} from '../actions';
 import {connect} from 'react-redux';
+import {postUpdated} from "../../posts/actions";
 
 class AddCommentForm extends Component {
 
   constructor(props) {
     super(props);
+
     this.initialState = {
       author: '',
       body: '',
-      parentId: props.parentID
+      parentId: props.post.id
     };
     this.state = this.initialState;
   }
@@ -26,8 +28,11 @@ class AddCommentForm extends Component {
 
   saveComment = event => {
     event.preventDefault();
-    const {addComment} = this.props;
+    const {addComment, post, notifyPostUpdate} = this.props;
     addComment(this.state);
+    post.commentCount += 1;
+    console.log(post);
+    notifyPostUpdate(post);
     this._reset();
   };
 
@@ -78,7 +83,8 @@ const mapStateToProps = (state, props) => ({
   categories: state.categories.items
 });
 const mapDispatchToProps = (dispatch) => ({
-  addComment: (comment) => addComment(dispatch, comment)
+  addComment: (comment) => addComment(dispatch, comment),
+  notifyPostUpdate: post => dispatch(postUpdated(post))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddCommentForm);

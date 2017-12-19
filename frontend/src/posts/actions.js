@@ -6,6 +6,7 @@ export const RECEIVED_POST = 'RECEIVED_POST';
 export const POST_ADDED = 'POST_ADDED';
 export const POST_DELETED = 'POST_DELETED';
 export const POST_UPDATED = 'POST_UPDATED';
+export const RESET_CURRENT_POST = 'RESET_CURRENT_POST';
 
 export function postsReceived(items, categoryName = null) {
   return {
@@ -15,10 +16,10 @@ export function postsReceived(items, categoryName = null) {
   }
 }
 
-export function postReceived(post) {
+export function postReceived(receivedPost) {
   return {
     type: RECEIVED_POST,
-    post
+    receivedPost
   }
 }
 
@@ -35,10 +36,17 @@ export function postDeleted(deletedPost){
   }
 }
 
-export function postUpdated(updatedPost){
+export function postUpdated(updatedPost, isCurrent = true){
   return {
     type: POST_UPDATED,
-    updatedPost
+    updatedPost,
+    isCurrent
+  }
+}
+
+export function resetCurrentPost(){
+  return {
+    type: RESET_CURRENT_POST
   }
 }
 
@@ -47,7 +55,7 @@ export const getPosts =  dispatch => (
 );
 
 export const getPost =  (dispatch, postID) => (
-  api.getPost(postID).then(posts => dispatch(postReceived(posts)))
+  api.getPost(postID).then(post => dispatch(postReceived(post)))
 );
 
 export const addPost = (dispatch, post) => {
@@ -67,11 +75,10 @@ export const editPost = (dispatch, post) => {
   api.editPost(post).then(result => dispatch(postUpdated(result)));
 };
 
-
 export const deletePost = (dispatch, postID) => {
   api.deletePost(postID).then(result => dispatch(postDeleted(result)));
 };
 
-export const votePost = (dispatch, post, action) => {
-  api.votePost(post.id, action).then(result => dispatch(postUpdated(result)));
+export const votePost = (dispatch, post, action, isCurrent = true) => {
+  api.votePost(post.id, action).then(result => dispatch(postUpdated(result, isCurrent)));
 };
