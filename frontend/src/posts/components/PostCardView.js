@@ -17,10 +17,10 @@ class PostCardView extends Component{
     }
   }
 
-  deletePost() {
+  deletePost(postID) {
+    console.log(this.props);
     console.log("delete post");
-    this.props.deletePost(this.props.match.params.postID);
-    this.props.history.push('/')
+    this.props.deletePost(postID);
   }
 
   editPost = post => {
@@ -43,8 +43,6 @@ class PostCardView extends Component{
   render() {
     const {post, categories} = this.props;
     const postLinkObject = `/${post.category}/${post.id}`;
-
-
     const postDate = new Date(post.timestamp);
 
     return (
@@ -73,7 +71,7 @@ class PostCardView extends Component{
                   <FaClose
                     className="control-icon"
                     style={{fontSize: 25}}
-                    onClick={this.deletePost.bind(this)}/>
+                    onClick={this.deletePost.bind(this, post.id)}/>
                 </div>
                 <div className="edit">
                   <FaEdit

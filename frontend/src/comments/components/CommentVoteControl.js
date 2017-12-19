@@ -1,29 +1,26 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {voteComment} from '../actions';
 import {connect} from 'react-redux';
 import {FaThumbsODown, FaThumbsOUp} from 'react-icons/lib/fa';
 
-class CommentVoteControl extends Component {
+function CommentVoteControl({voteComment, comment, post}) {
 
-  voteComment(action) {
-    const {voteComment, comment} = this.props;
+  const vote = (action) => {
     voteComment(comment, action);
-  }
+  };
 
-  render() {
-    const {comment} = this.props;
+  return (
+    <div className="votes text-right  d-inline">
+      <span className=""> votes: {comment.voteScore}</span>
+      <FaThumbsODown className="decrease-votes vote-icon"
+                     onClick={() => vote('downVote')}/>
+      <FaThumbsOUp className="increase-votes vote-icon"
+                   onClick={() => vote('upVote')}/>
+    </div>
+  )
 
-    return (
-      <div className="votes text-right  d-inline">
-        <span className=""> votes: {comment.voteScore}</span>
-        <FaThumbsODown className="decrease-votes vote-icon"
-                       onClick={this.voteComment.bind(this, 'downVote')}/>
-        <FaThumbsOUp className="increase-votes vote-icon"
-                     onClick={this.voteComment.bind(this, 'upVote')}/>
-      </div>
-    )
-  }
 }
+
 const mapDispatchToProps = (dispatch) => ({
   voteComment: (comment, action) => voteComment(dispatch, comment, action)
 });
